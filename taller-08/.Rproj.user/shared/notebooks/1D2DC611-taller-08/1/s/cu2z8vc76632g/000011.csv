@@ -1,5 +1,0 @@
-"0",""
-"0","# Conclucion de la regresion lineal multiple: Ninguno de los factores/variables evaluados se encuentran asociados al desempeño locomotor de la rana picuda dado de los soportados por los resulatdos del reporte del modelo (Ninguno es estadisticamente significativo). Ademas, en el summary se puede evidenciar que ningun p value es menor a 0.05, lo que nos indica que las variables no son estadisticamente significativas."
-"0",""
-"0","# Conclucion de la correlacion de Pearson: si hay correlacion entre el tamaño corporal y el peso de la rana picuda. Evidenciado del coeficiente de correlacion de Pearson en el que se encontro una correlacion positiva de 0.7477 y un p-value de 1.02e-09 que indica que se rechaza la hipotesis nula y por ende existe una correlacion entre el tamaño corporal y el peso de la rana picuda."
-"0",""

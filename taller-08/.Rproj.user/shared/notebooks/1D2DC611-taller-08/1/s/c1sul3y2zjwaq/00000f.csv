@@ -1,7 +1,0 @@
-"0",""
-"0","# Realizaremos una regresion lineal multiple"
-"0","  # Hipotesis nula: No existe correlacion"
-"0","  # Hipotesis alternativa: Existe correlacion"
-"0","modelo <- lm(velmax ~ svl_cm * peso_g * Reservas_energeticas, data = costos)"
-"0",""
-"0","performance::check_model(modelo, check = ""linearity"")"

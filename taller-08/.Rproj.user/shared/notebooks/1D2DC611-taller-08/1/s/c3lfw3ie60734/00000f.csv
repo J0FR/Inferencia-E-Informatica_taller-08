@@ -1,7 +1,0 @@
-"0",""
-"0","# Realizaremos una regresion lineal multiple"
-"0","  # Hipotesis nula: No existe correlacion"
-"0","  # Hipotesis alternativa: Existe correlacion"
-"0","modelo_2 <- lm(area ~ month * FFMC * DMC * DC + ISI * temp * RH * wind * rain, data = forestfires)"
-"0",""
-"0","performance::check_model(modelo_2, check = ""linearity"")"

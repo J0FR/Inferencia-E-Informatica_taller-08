@@ -1,0 +1,178 @@
+---
+title: "g01-taller09-s01"
+author: "g01"
+format: html
+editor: visual
+---
+
+## Taller 09 - Laboratorio de Bioinformática
+
+En este taller vamos a aprender sobre cómo navegar y mover archivos en la terminal, así como trabajar con scripts de Bash y manejar archivos bioinformáticos. A continuación, se presentan los diferentes puntos con sus pasos correspondientes y capturas de pantalla de cada proceso.
+
+### 1. Navegando y moviendo archivos en terminal
+
+1.  Cambiar al directorio `Talleres` y luego entrar al directorio `Taller-09`:
+
+    ``` bash
+    cd Talleres
+    cd Taller-09
+    ```
+
+    ![Screenshot del cambio de directorio](img/p1.png)
+
+2.  Examinar el contenido del directorio actual con `ls` y luego `ls -lh`. Comparar ambos:
+
+    ``` bash
+    ls
+    ls -lh
+    ```
+
+    **Diferencia:** `ls` muestra una lista simple de archivos, mientras que `ls -lh` muestra información detallada, incluyendo tamaños de archivos.
+
+    ![Screenshot de `ls` y `ls -lh`](img/p2.png)
+
+3.  Visualizar la ruta actual usando `pwd`:
+
+    ``` bash
+    pwd
+    ```
+
+    ![Screenshot de la ruta actual](img/p3.png)
+
+4.  Comandos `cd ..` y `cd ~`:
+
+    -   `cd ..` lleva al directorio padre de `Taller-09` llamado `Talleres`.
+    -   `cd ~` lleva al directorio `HOME`.
+
+    ![Screenshot usando comandos `cd ..` y `cd ~`](img/p4.png)
+
+5.  Crear estructura de directorios con `mkdir`:
+
+    ``` bash
+    mkdir -p ~/Secciones/seccion-01/grupo-01/jose/{files,scripts,tasks}
+    mkdir -p ~/Secciones/seccion-01/grupo-01/esteban/{files,scripts,tasks}
+    ```
+
+    ![Screenshot de la estructura creada](img/p5.png)
+
+6.  Copiar el archivo `Datos1.tgz` al directorio del grupo y descomprimirlo:
+
+    ``` bash
+    cp ~/Talleres/Taller-09/Datos1.tgz ~/Secciones/seccion-01/grupo-01/
+    tar -xzvf Datos1.tgz
+    ```
+
+    **Flags -xzvf:** Indican que se descomprimirá (`x`), será comprimido en formato gzip (`z`), mostrará cada archivo mientras se extrae (`v`), y especificará el archivo (`f`).
+
+    ![Screenshot de copia y descompresion de datos](img/p6.png)
+
+### 2. Visualizando y manipulando archivos
+
+1.  Visualizar el archivo `TAIR10_pep_20101214.fasta` con diferentes comandos:
+
+    ``` bash
+    cat TAIR10_pep_20101214.fasta
+    head TAIR10_pep_20101214.fasta
+    more TAIR10_pep_20101214.fasta
+    less TAIR10_pep_20101214.fasta
+    ```
+
+    **Diferencias:** `cat` muestra todo el contenido, `head` muestra las primeras líneas, `more` y `less` permiten navegar por el contenido.
+
+    ![Screenshot de visualizacion](img/p7.png)
+
+2.  Obtener nombres de proteínas que comienzan con `>`:
+
+    ``` bash
+    grep ">" TAIR10_pep_20101214.fasta
+    ```
+
+    ![Screenshot nombres de proteínas que comienzan con `>`](img/p8.png)
+
+3.  Contar el número de proteínas:
+
+    ``` bash
+    grep ">" TAIR10_pep_20101214.fasta | wc -l
+    ```
+
+    Hay 35386 proteínas en el archivo.
+
+    **Operador \|:** Redirige la salida del comando grep al comando wc -l para contar el número de líneas.
+
+    ![Screenshot del conteo de proteínas](img/p9.png)
+
+4.  Guardar nombres en un archivo:
+
+    ``` bash
+    grep ">" TAIR10_pep_20101214.fasta > nombres_proteinas.txt
+    ```
+
+    **Operador `>`:** Redirige la salida al archivo `nombres_proteinas.txt`.
+
+    ![Screenshot de guardado de nombres en archivo](img/p10.png)
+
+### 3. Corriendo scripts en Bash
+
+1.  Leer la documentación de SLURM en `/hpcfs/shared/README/` y explorar los comandos `sbatch`, `srun`, `scancel`, y `squeue`.
+
+    ``` bash
+    man sbatch
+    man srun
+    man scancel
+    man squeue
+    ```
+
+2.  Especificar recursos para una sesión interactiva y verificar las particiones existentes.
+
+3.  Copiar `testjob.sh` y darle permisos de ejecución:
+
+    ``` bash
+    cp ~/testjob.sh ~/scripts/
+    chmod +x ~/scripts/testjob.sh
+    ```
+
+    **Flags `+x`:** Otorgan permisos de ejecución al archivo.
+
+4.  Modificar `testjob.sh`:
+
+    -   Cambiar `USER@uniandes.edu.co` por tu correo.
+    -   Borrar las líneas `module load R/3.5.1mro` y `sleep 60`.
+
+5.  Ejecutar el script:
+
+    ``` bash
+    bash testjob.sh
+    ./testjob.sh
+    ```
+
+### 4. Creando scripts en Bash
+
+1.  Crear un nuevo script `script2.sh`:
+
+    ``` bash
+    touch script2.sh
+    ```
+
+2.  Editar el script y añadir los módulos:
+
+    ``` bash
+    module load emboss/6.6.0
+    ```
+
+3.  Añadir el siguiente comando al script:
+
+    ``` bash
+    sixpack ~/seccion-<grupo>/Datos1/lambda_virus.fa
+    ```
+
+    ![Screenshot del script modificado](img/script_modificado.png)
+
+4.  Enviar el script como un job:
+
+    ``` bash
+    sbatch script2.sh
+    ```
+
+    **`sbatch`:** Encola el script para ser ejecutado en el clúster.
+
+------------------------------------------------------------------------
