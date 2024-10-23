@@ -1,0 +1,6 @@
+"0",""
+"0","cocodrilos <- read_excel(""Cocodrilos.xlsx"", sheet = 1)"
+"0","cocodrilos$ClutchS <- as.numeric(cocodrilos$ClutchS)"
+"0","cocodrilos$egg_size <- as.numeric(cocodrilos$egg_size)"
+"0",""
+"0","cocodrilos"

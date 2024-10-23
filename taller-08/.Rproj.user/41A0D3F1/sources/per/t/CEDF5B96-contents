@@ -1,0 +1,350 @@
+---
+title: "Taller 07"
+subtitle: "ANOVA & Kruskal-Wallis"
+author: Jose David Florez Ruiz
+date: today
+format: html
+lang: es
+---
+
+```{r}
+
+library(tidyverse)
+library(ggsignif)
+library(ggplot2)
+
+```
+
+En **todos** los puntos del taller **debe** realizar todos los siguientes pasos:
+
+i. Explorar visualmente la distribución del conjunto de datos asociado a la investigación.
+ii. Plantear la hipótesis nula y la alternativa teniendo en cuenta la pregunta de investigación mencionada.
+iii. Defina el nivel de significancia ($\alpha$) y justificar su selección.
+iiv. Evaluar la normalidad de las variables que lo requieran.
+v. Escoger la prueba estadística adecuada (validar que se cumplan todos los supuestos para su selección).
+
+## 1. Ardillas y Pinos [2.5]
+
+Los datos `pines-squirrels.tsv` representan el tamaño de cono (masa) de una especie de pino en 16 sitios de estudio en tres tipos de ambientes en el occidente de USA (Edelaar & Benkman, 2006). Los tres ambientes hacían referencia a:
+
+* Ambiente I: Isla con ardillas
+* Ambiente II: Isla sin ardillas
+* Ambiente III: Continente con ardillas. 
+
+```{r}
+
+pines <- read.table("pines-squirrels.tsv", header=TRUE)
+
+```
+
+i-V. Realice los pasos mencionados anteriormente.
+i. Explorar visualmente la distribución del conjunto de datos asociado a la investigación.
+
+```{r}
+
+ggplot(pines, aes(x = coneMass)) +
+  geom_histogram(aes(y = ..density..), bins = 20, fill = "lightblue", color = "black") +
+  geom_density(fill = "orange", alpha = 0.3) +
+  facet_wrap(~ environment) +
+  labs(title = "Distribución de Tamaño de Cono por Ambiente",
+       x = "Tamaño de Cono (coneMass)",
+       y = "Densidad") +
+  theme_minimal()
+
+ggplot(pines, aes(x = environment, y = coneMass, fill = environment)) +
+  geom_boxplot() +
+  labs(title = "Comparación de Tamaño de Cono entre Ambientes",
+       x = "Ambiente",
+       y = "Tamaño de Cono (coneMass)") +
+  theme_minimal()
+
+```
+
+ii. Plantear la hipótesis nula y la alternativa teniendo en cuenta la pregunta de investigación mencionada.
+
+```{r}
+
+# Hipótesis nula (H0): No hay diferencias significativas en el tamaño de los conos entre los tres ambientes.
+# Hipotesis alternativa (H1): Existen diferencias significativas en el tamaño de los conos entre los tres ambientes.
+
+```
+
+iii. Defina el nivel de significancia ($\alpha$) y justificar su selección.
+
+El nivel de significancia es de 0.05, ya que es el valor más comúnmente utilizado en la literatura científica.
+
+iiv. Evaluar la normalidad de las variables que lo requieran.
+
+```{r}
+
+pines_I <- pines |> filter(environment == "I")
+pines_II <- pines |> filter(environment == "II")
+pines_III <- pines |> filter(environment == "III")
+
+shapiro_I <- shapiro.test(pines_I$coneMass)
+shapiro_II <- shapiro.test(pines_II$coneMass)
+shapiro_III <- shapiro.test(pines_III$coneMass)
+
+shapiro_I
+shapiro_II
+shapiro_III
+
+```
+Ambiente I: El valor p = 0.0059 indica que rechazamos la hipotesis nula, concluyendo que los datos del Ambiente I no siguen una distribucion normal.
+
+Ambiente II: El valor p = 0.00064 tambien nos lleva a rechazar la hipotesis nula, por lo que los datos del Ambiente II no siguen una distribucion normal.
+
+Ambiente III: El valor p = 6.033 x 10^-5 es mucho menor que 0.05, por lo que rechazamos la hipotesis nula y concluimos que los datos del Ambiente III no siguen una distribucion normal.
+
+v. Escoger la prueba estadística adecuada (validar que se cumplan todos los supuestos para su selección).
+
+La prueba Kruskal-Wallis es la más apropiada para este caso, ya que no se cumplen el supuesto de normalidad para hacer ANOVA.
+
+```{r}
+
+kruskal <- kruskal.test(coneMass ~ environment, data = pines)
+
+kruskal
+
+```
+El resultado de la prueba de Kruskal-Wallis muestra un valor p extremadamente bajo, lo que nos lleva a rechazar la hipótesis nula (H0). Esto indica que existen diferencias significativas en el tamaño de los conos entre los tres ambientes estudiados: Isla con ardillas, Isla sin ardillas, y Continente con ardillas. En términos de las hipótesis planteadas, se acepta la hipótesis alternativa (H1), concluyendo que el tamaño de los conos varía significativamente dependiendo del ambiente, lo que sugiere que la presencia o ausencia de ardillas puede estar influyendo en la evolución del tamaño de los conos en estos entornos.
+
+a. ¿Existen diferencias en el tamaño de cono entre los tres ambientes?
+
+El resultado de la prueba de Kruskal-Wallis muestra un valor p extremadamente bajo (p ≈ 1.61e-29), lo que indica que existen diferencias significativas en el tamaño de los conos entre los tres ambientes: Isla con ardillas, Isla sin ardillas y Continente con ardillas.
+
+b. Realice una gráfica para ilustrar los resultados.
+
+```{r}
+ggplot(pines, aes(x = environment, y = coneMass, fill = environment)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width = 0.2, alpha = 0.7) +
+  labs(
+    y = "Tamaño de Cono (g)",
+    subtitle = "Comparación de Tamaño de Cono entre Ambientes"
+  ) +
+  geom_signif(
+    comparisons = list(
+      c("I", "II"),
+      c("I", "III"),
+      c("II", "III")
+    ),
+    step_increase = 0.2,
+    map_signif_level = TRUE
+  ) +
+  theme_minimal()
+```
+
+c. ¿Cuál es el ambiente con mayor tamaño de cono? Realice una prueba de comparaciones múltiples.
+
+```{r}
+pines
+
+pairwise.wilcox.test(pines$coneMass, pines$environment)
+```
+
+Dada la grafica de caja y bigotes, el ambiente con mayor tamaño de cono es el Isla con ardillas (Ambiente I).
+
+
+d. Conclusión biológica.
+
+Los resultados sugieren que la presencia o ausencia de ardillas influye en el tamaño de los conos. En ambientes donde hay ardillas, es probable que los pinos evolucionen para producir conos más grandes como una respuesta adaptativa, mientras que en ambientes sin ardillas, los conos tienden a ser más pequeños.
+
+
+## 2. Supervivencia al Veneno [2.5 puntos]
+
+Los datos `survival.tsv` corresponden a los resultados después del siguiente experimento: Se midió el tiempo de supervivencia de una serie de animales a los cuales se les asignó aleatoriamente un tipo de veneno (I, II y III) y un tipo de tratamiento (A, B, C, D).
+
+```{r}
+
+# ANOVA TWO WAY
+# * UNA DEPENDE DE LA OTRA
+# + UNA INDEPENDIENTES
+~ tratamiento + veneno
+survival_raw <- readLines("survival.tsv")
+
+survival_clean <- do.call(rbind, strsplit(survival_raw, "\\s+"))
+
+survival <- as.data.frame(survival_clean, stringsAsFactors = FALSE)
+
+colnames(survival) <- c("tratamiento", "veneno", "supervivencia")
+
+survival$supervivencia <- as.numeric(survival$supervivencia)
+
+summary(survival)
+
+survival
+
+```
+
+i-V. Realice los pasos mencionados anteriormente.
+i. Explorar visualmente la distribución del conjunto de datos asociado a la investigación.
+
+```{r}
+
+ggplot(survival, aes(x = supervivencia)) +
+  geom_histogram(aes(y = ..density..), bins = 20, fill = "lightblue", color = "black") +
+  geom_density(fill = "orange", alpha = 0.3) +
+  facet_wrap(~ tratamiento + veneno) +
+  labs(title = "Distribución de Supervivencia por Tratamiento y Veneno",
+       x = "Tiempo de Supervivencia",
+       y = "Densidad") +
+  theme_minimal()
+
+ggplot(survival, aes(x = tratamiento, y = supervivencia, fill = veneno)) +
+  geom_boxplot() +
+  facet_wrap(~ veneno) +
+  labs(title = "Supervivencia por Tratamiento y Veneno",
+       x = "Tratamiento",
+       y = "Supervivencia") +
+  theme_minimal()
+
+ggplot(survival, aes(x = veneno, y = supervivencia, fill = tratamiento)) +
+  geom_boxplot() +
+  labs(title = "Supervivencia por Veneno y Tratamiento",
+       x = "Veneno",
+       y = "Supervivencia") +
+  theme_minimal()
+
+```
+
+ii. Plantear la hipótesis nula y la alternativa teniendo en cuenta la pregunta de investigación mencionada.
+
+```{r}
+
+# Hipotesis nula (H0): No hay diferencias significativas en la supervivencia entre los diferentes tratamientos y venenos.
+# Hipotesis alternativa (H1): Existen diferencias significativas en la supervivencia entre los diferentes tratamientos y venenos.
+
+```
+
+iii. Defina el nivel de significancia ($\alpha$) y justificar su selección.
+
+El nivel de significancia es de 0.05, ya que es el valor más comúnmente utilizado en la literatura científica.
+
+iiv. Evaluar la normalidad de las variables que lo requieran.
+
+```{r}
+
+# Veritifcar normalidad
+survival_A <- survival |> filter(tratamiento == "A")
+survival_B <- survival |> filter(tratamiento == "B")
+survival_C <- survival |> filter(tratamiento == "C")
+survival_D <- survival |> filter(tratamiento == "D")
+
+shapiro_A1 <- shapiro.test(survival_A$supervivencia)
+shapiro_B1 <- shapiro.test(survival_B$supervivencia)
+shapiro_C1 <- shapiro.test(survival_C$supervivencia)
+shapiro_D1 <- shapiro.test(survival_D$supervivencia)
+
+shapiro_A1
+shapiro_B1
+shapiro_C1
+shapiro_D1
+
+# Verificar homogenous
+# bartlett.test(survival$supervivencia ~ survival$tratamiento)
+
+```
+Supervivencia A: El valor p = 0.1623 indica que no rechazamos la hipotesis nula, concluyendo que los datos del Tratamiento A siguen una distribucion normal.
+
+Supervivencia B: El valor p = 0.4249 indica que no rechazamos la hipotesis nula, concluyendo que los datos del Tratamiento B siguen una distribucion normal.
+
+Superivencia C: El valor p = 0.1254 indica que no rechazamos la hipotesis nula, concluyendo que los datos del Tratamiento C siguen una distribucion normal.
+
+Supervivencia D: El valor p = 0.1472 indica que no rechazamos la hipotesis nula, concluyendo que los datos del Tratamiento D siguen una distribucion normal.
+
+
+En conclucion, se cumple normalidad en todas las variables.
+
+v. Escoger la prueba estadística adecuada (validar que se cumplan todos los supuestos para su selección).
+
+La prueba ANOVA de dos vías es la más apropiada para este caso, ya que se cumple el supuesto de normalidad para hacer ANOVA.
+
+```{r}
+
+anova <- aov(supervivencia ~ tratamiento * veneno, data = survival)
+
+anova
+
+```
+El ANOVA de dos vías indica que tanto el tratamiento como el veneno tienen un efecto significativo en la supervivencia, con sumas de cuadrados de 0.928 y 1.022, respectivamente. También existe una interacción entre ambos factores (0.247), aunque menor. El error residual es de 0.147, lo que refleja variación no explicada. La advertencia sobre efectos desbalanceados sugiere que los grupos no son completamente equivalentes, lo que puede afectar la precisión de los resultados. En resumen, ambos factores y su interacción influyen en la supervivencia, pero el diseño no es totalmente balanceado.
+
+```{r}
+
+library(performance)
+check_autocorrelation(anova)
+check_normality(anova)
+check_heteroskedasticity(anova)
+
+```
+Los resultados obtenidos al verificar los supuestos del ANOVA muestran que, aunque los residuales parecen ser independientes y no autocorrelacionados (p = 0.790), se han detectado dos violaciones importantes de los supuestos del ANOVA. En primer lugar, los residuales no siguen una distribución normal (p = 0.001), lo cual sugiere que los datos no se ajustan bien a este supuesto. En segundo lugar, se ha detectado heterocedasticidad (p < 0.001), es decir, la varianza de los errores no es constante entre los grupos. Estas violaciones sugieren que los resultados del ANOVA podrían no ser confiables.
+
+a. ¿Existen diferencias entre los tratamientos?
+
+Sí, el análisis ANOVA indica que existen diferencias significativas entre los tratamientos. Esto se refleja en la suma de cuadrados asociada al tratamiento, que muestra un efecto significativo en la supervivencia. El ANOVA identifica que el tratamiento tiene un impacto claro en los tiempos de supervivencia de los animales.
+
+b. ¿Qué tratamiento afectó en mayor medida la supervivencia?
+
+
+```{r}
+
+# Realizar el ANOVA
+anova_model <- aov(supervivencia ~ tratamiento * veneno, data = survival)
+
+# Prueba post-hoc de Tukey para comparar los tratamientos
+tukey_tratamiento <- TukeyHSD(anova_model, "tratamiento")
+
+# Mostrar los resultados de la prueba Tukey
+tukey_tratamiento
+
+# Visualización con un gráfico para observar las diferencias entre tratamientos
+ggplot(survival, aes(x = tratamiento, y = supervivencia, fill = tratamiento)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width = 0.2, alpha = 0.7) +
+  labs(
+    y = "Supervivencia",
+    subtitle = "Comparación de Supervivencia entre Tratamientos"
+  ) +
+  theme_minimal()
+
+
+```
+En el gráfico de caja y dispersión presentado, se observa que el Tratamiento B parece tener el mayor impacto en la supervivencia, ya que muestra una mayor mediana en comparación con los otros tratamientos, así como una mayor variabilidad en los datos.
+
+c. ¿Hay diferencias entre los venenos? ¿Qué veneno afectó en menor medida la supervivencia?
+
+```{r}
+
+# Prueba post-hoc de Tukey para comparar los venenos
+tukey_veneno <- TukeyHSD(anova_model, "veneno")
+
+# Mostrar los resultados de la prueba Tukey
+tukey_veneno
+
+
+```
+La prueba de comparaciones múltiples de Tukey muestra que existen diferencias significativas entre los venenos y el veneno I es el que afecta en menor medida la supervivencia.
+
+d. ¿Existe interacción? Incluya el Valor-P y el gráfico.
+
+```{r}
+
+# Mostrar el resumen del ANOVA para obtener el valor p de la interacción
+summary(anova_model)
+
+# Gráfico de interacción entre tratamiento y veneno
+ggplot(survival, aes(x = tratamiento, y = supervivencia, color = veneno, group = veneno)) +
+  geom_line(aes(linetype = veneno), size = 1) +
+  geom_point(size = 2) +
+  labs(
+    title = "Interacción entre Tratamiento y Veneno en la Supervivencia",
+    x = "Tratamiento",
+    y = "Supervivencia"
+  ) +
+  theme_minimal()
+
+```
+
+e. Conclusión biológica.
+
+Los resultados indican que tanto los tratamientos como los venenos influyen significativamente en la supervivencia, con una clara interacción entre ambos factores. El Tratamiento B prolonga la supervivencia más que los otros, mientras que el Veneno I es el menos letal. Esta interacción sugiere que el efecto de los tratamientos varía según el veneno administrado, proporcionando información clave sobre la resistencia a toxinas en los animales estudiados.

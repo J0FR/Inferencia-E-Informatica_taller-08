@@ -1,0 +1,490 @@
+"0","performance::check_normality(modelo_2)"
+"1","[31mWarning: Non-normality of residuals detected (p < .001).
+[39m"
+"0","performance::check_heteroskedasticity(modelo_2)"
+"1","[31mWarning: Heteroscedasticity (non-constant error variance) detected (p < .001).
+[39m"
+"0","# Se cumplen los supuestos de los residuos linealidad. Sin embargo, no se cumple el supuesto de normalidad, ni Heterosteasidad de los residuos por lo que el modelo puede que no sea el mejor."
+"0",""
+"0","summary(modelo_2)"
+"1","
+Call:
+"
+"1",""
+"1","lm(formula = area ~ month * FFMC * DMC * DC + ISI * temp * RH * 
+    wind * rain, data = forestfires)"
+"1",""
+"1","
+
+"
+"1",""
+"1","Residuals:
+"
+"1","    Min "
+"1","     1Q "
+"1"," Median "
+"1","     3Q "
+"1","    Max "
+"1","
+"
+"1"," -52.56 "
+"1"," -15.74 "
+"1","  -6.17 "
+"1","   1.94 "
+"1","1050.83 "
+"1","
+"
+"1","
+Coefficients: ("
+"1",""
+"1","9"
+"1",""
+"1"," not defined because of singularities)
+"
+"1","                     "
+"1","   Estimate"
+"1"," Std. Error"
+"1"," t value"
+"1"," Pr(>|t|)"
+"1","
+(Intercept)          "
+"1"," -1.974e+02"
+"1","  4.536e+02"
+"1","  -0.435"
+"1","    0.664"
+"1","
+month                "
+"1","  4.206e+00"
+"1","  9.279e+01"
+"1","   0.045"
+"1","    0.964"
+"1","
+FFMC                 "
+"1","  1.738e+00"
+"1","  4.491e+00"
+"1","   0.387"
+"1","    0.699"
+"1","
+DMC                  "
+"1","  6.893e-01"
+"1","  1.709e+01"
+"1","   0.040"
+"1","    0.968"
+"1","
+DC                   "
+"1","  7.043e-01"
+"1","  2.090e+00"
+"1","   0.337"
+"1","    0.736"
+"1","
+ISI                  "
+"1","  1.361e+01"
+"1","  1.950e+01"
+"1","   0.698"
+"1","    0.486"
+"1","
+temp                 "
+"1","  3.059e+00"
+"1","  8.648e+00"
+"1","   0.354"
+"1","    0.724"
+"1","
+RH                   "
+"1","  8.704e-01"
+"1","  3.003e+00"
+"1","   0.290"
+"1","    0.772"
+"1","
+wind                 "
+"1","  7.889e+00"
+"1","  2.605e+01"
+"1","   0.303"
+"1","    0.762"
+"1","
+rain                 "
+"1","  1.495e+05"
+"1","  6.663e+05"
+"1","   0.224"
+"1","    0.823"
+"1","
+month:FFMC           "
+"1"," -8.089e-02"
+"1","  1.081e+00"
+"1","  -0.075"
+"1","    0.940"
+"1","
+month:DMC            "
+"1"," -2.806e-02"
+"1","  2.880e+00"
+"1","  -0.010"
+"1","    0.992"
+"1","
+FFMC:DMC             "
+"1"," -1.319e-02"
+"1","  1.902e-01"
+"1","  -0.069"
+"1","    0.945"
+"1","
+month:DC             "
+"1"," -2.746e-02"
+"1","  2.874e-01"
+"1","  -0.096"
+"1","    0.924"
+"1","
+FFMC:DC              "
+"1"," -9.951e-03"
+"1","  2.374e-02"
+"1","  -0.419"
+"1","    0.675"
+"1","
+DMC:DC               "
+"1","  8.856e-03"
+"1","  4.351e-02"
+"1","   0.204"
+"1","    0.839"
+"1","
+ISI:temp             "
+"1"," -6.793e-01"
+"1","  9.159e-01"
+"1","  -0.742"
+"1","    0.459"
+"1","
+ISI:RH               "
+"1"," -1.999e-01"
+"1","  3.652e-01"
+"1","  -0.547"
+"1","    0.584"
+"1","
+temp:RH              "
+"1"," -3.478e-02"
+"1","  1.851e-01"
+"1","  -0.188"
+"1","    0.851"
+"1","
+ISI:wind             "
+"1"," -3.028e+00"
+"1","  3.402e+00"
+"1","  -0.890"
+"1","    0.374"
+"1","
+temp:wind            "
+"1","  4.524e-03"
+"1","  1.612e+00"
+"1","   0.003"
+"1","    0.998"
+"1","
+RH:wind              "
+"1"," -1.226e-01"
+"1","  5.113e-01"
+"1","  -0.240"
+"1","    0.811"
+"1","
+ISI:rain             "
+"1"," -1.047e+04"
+"1","  4.682e+04"
+"1","  -0.224"
+"1","    0.823"
+"1","
+temp:rain            "
+"1"," -2.723e+03"
+"1","  1.196e+04"
+"1","  -0.228"
+"1","    0.820"
+"1","
+RH:rain              "
+"1"," -1.308e+03"
+"1","  5.864e+03"
+"1","  -0.223"
+"1","    0.824"
+"1","
+wind:rain            "
+"1","  8.772e+01"
+"1","  2.412e+02"
+"1","   0.364"
+"1","    0.716"
+"1","
+month:FFMC:DMC       "
+"1","  1.992e-03"
+"1","  3.191e-02"
+"1","   0.062"
+"1","    0.950"
+"1","
+month:FFMC:DC        "
+"1","  5.077e-04"
+"1","  3.271e-03"
+"1","   0.155"
+"1","    0.877"
+"1","
+month:DMC:DC         "
+"1"," -1.662e-03"
+"1","  5.628e-03"
+"1","  -0.295"
+"1","    0.768"
+"1","
+FFMC:DMC:DC          "
+"1"," -9.847e-05"
+"1","  4.833e-04"
+"1","  -0.204"
+"1","    0.839"
+"1","
+ISI:temp:RH          "
+"1","  9.627e-03"
+"1","  2.044e-02"
+"1","   0.471"
+"1","    0.638"
+"1","
+ISI:temp:wind        "
+"1","  1.421e-01"
+"1","  1.752e-01"
+"1","   0.811"
+"1","    0.418"
+"1","
+ISI:RH:wind          "
+"1","  4.633e-02"
+"1","  6.534e-02"
+"1","   0.709"
+"1","    0.479"
+"1","
+temp:RH:wind         "
+"1","  1.453e-03"
+"1","  3.593e-02"
+"1","   0.040"
+"1","    0.968"
+"1","
+ISI:temp:rain        "
+"1","  1.906e+02"
+"1","  8.372e+02"
+"1","   0.228"
+"1","    0.820"
+"1","
+ISI:RH:rain          "
+"1","  9.125e+01"
+"1","  4.122e+02"
+"1","   0.221"
+"1","    0.825"
+"1","
+temp:RH:rain         "
+"1","         NA"
+"1","         NA"
+"1","      NA"
+"1","       NA"
+"1","
+ISI:wind:rain        "
+"1","         NA"
+"1","         NA"
+"1","      NA"
+"1","       NA"
+"1","
+temp:wind:rain       "
+"1","         NA"
+"1","         NA"
+"1","      NA"
+"1","       NA"
+"1","
+RH:wind:rain         "
+"1","         NA"
+"1","         NA"
+"1","      NA"
+"1","       NA"
+"1","
+month:FFMC:DMC:DC    "
+"1","  1.740e-05"
+"1","  6.262e-05"
+"1","   0.278"
+"1","    0.781"
+"1","
+ISI:temp:RH:wind     "
+"1"," -2.337e-03"
+"1","  3.909e-03"
+"1","  -0.598"
+"1","    0.550"
+"1","
+ISI:temp:RH:rain     "
+"1","         NA"
+"1","         NA"
+"1","      NA"
+"1","       NA"
+"1","
+ISI:temp:wind:rain   "
+"1","         NA"
+"1","         NA"
+"1","      NA"
+"1","       NA"
+"1","
+ISI:RH:wind:rain     "
+"1","         NA"
+"1","         NA"
+"1","      NA"
+"1","       NA"
+"1","
+temp:RH:wind:rain    "
+"1","         NA"
+"1","         NA"
+"1","      NA"
+"1","       NA"
+"1","
+ISI:temp:RH:wind:rain"
+"1","         NA"
+"1","         NA"
+"1","      NA"
+"1","       NA"
+"1","
+"
+"1","
+Residual standard error:"
+"1"," "
+"1","64.62"
+"1"," "
+"1","on"
+"1"," "
+"1","479"
+"1"," "
+"1","degrees of freedom"
+"1","
+"
+"1","Multiple R-squared: "
+"1"," "
+"1","0.04349"
+"1",",	Adjusted R-squared: "
+"1"," "
+"1","-0.03039"
+"1"," "
+"1","
+F-statistic:"
+"1"," "
+"1","0.5886"
+"1"," "
+"1","on"
+"1"," "
+"1","37"
+"1"," "
+"1","and"
+"1"," "
+"1","479"
+"1"," "
+"1","DF,  p-value:"
+"1"," "
+"1","0.9754"
+"1","
+"
+"1","
+"
+"0","report::report(modelo_2)"
+"2","Model matrix is rank deficient. Parameters `temp:RH:rain, ISI:wind:rain, temp:wind:rain, RH:wind:rain,
+  ISI:temp:RH:rain, ISI:temp:wind:rain, ISI:RH:wind:rain, temp:RH:wind:rain, ISI:temp:RH:wind:rain` were not
+  estimable.
+"
+"2","Model matrix is rank deficient. Parameters `temp:RH:rain, ISI:wind:rain, temp:wind:rain, RH:wind:rain,
+  ISI:temp:RH:rain, ISI:temp:wind:rain, ISI:RH:wind:rain, temp:RH:wind:rain, ISI:temp:RH:wind:rain` were not
+  estimable.
+"
+"2","Model matrix is rank deficient. Parameters `temp:RH:rain, ISI:wind:rain, temp:wind:rain, RH:wind:rain,
+  ISI:temp:RH:rain, ISI:temp:wind:rain, ISI:RH:wind:rain, temp:RH:wind:rain, ISI:temp:RH:wind:rain` were not
+  estimable.
+"
+"2","Model matrix is rank deficient. Parameters `temp:RH:rain, ISI:wind:rain, temp:wind:rain, RH:wind:rain,
+  ISI:temp:RH:rain, ISI:temp:wind:rain, ISI:RH:wind:rain, temp:RH:wind:rain, ISI:temp:RH:wind:rain` were not
+  estimable.
+"
+"1","We fitted a linear model (estimated using OLS) to predict area with month, FFMC, DMC, DC, ISI, temp, RH, wind and rain
+(formula: area ~ month * FFMC * DMC * DC + ISI * temp * RH * wind * rain). The model explains a statistically not
+significant and weak proportion of variance (R2 = 0.04, F(37, 479) = 0.59, p = 0.975, adj. R2 = -0.03). The model's
+intercept, corresponding to month = 0, FFMC = 0, DMC = 0, DC = 0, ISI = 0, temp = 0, RH = 0, wind = 0 and rain = 0, is at
+-197.43 (95% CI [-1088.66, 693.79], t(479) = -0.44, p = 0.664). Within this model:
+
+  - The effect of month is statistically non-significant and positive (beta = 4.21, 95% CI [-178.11, 186.52], t(479) = 0.05, p
+= 0.964; Std. beta = 0.67, 95% CI [0.15, 1.20])
+  - The effect of FFMC is statistically non-significant and positive (beta = 1.74, 95% CI [-7.09, 10.56], t(479) = 0.39, p =
+0.699; Std. beta = -0.01, 95% CI [-0.38, 0.35])
+  - The effect of DMC is statistically non-significant and positive (beta = 0.69, 95% CI [-32.89, 34.27], t(479) = 0.04, p =
+0.968; Std. beta = 0.25, 95% CI [-0.05, 0.55])
+  - The effect of DC is statistically non-significant and positive (beta = 0.70, 95% CI [-3.40, 4.81], t(479) = 0.34, p =
+0.736; Std. beta = -0.53, 95% CI [-0.95, -0.11])
+  - The effect of ISI is statistically non-significant and positive (beta = 13.61, 95% CI [-24.71, 51.93], t(479) = 0.70, p =
+0.486; Std. beta = -4.47, 95% CI [-43.37, 34.44])
+  - The effect of temp is statistically non-significant and positive (beta = 3.06, 95% CI [-13.93, 20.05], t(479) = 0.35, p =
+0.724; Std. beta = -1.90, 95% CI [-19.02, 15.22])
+  - The effect of RH is statistically non-significant and positive (beta = 0.87, 95% CI [-5.03, 6.77], t(479) = 0.29, p =
+0.772; Std. beta = -2.76, 95% CI [-26.18, 20.66])
+  - The effect of wind is statistically non-significant and positive (beta = 7.89, 95% CI [-43.29, 59.07], t(479) = 0.30, p =
+0.762; Std. beta = 0.10, 95% CI [-0.21, 0.41])
+  - The effect of rain is statistically non-significant and positive (beta = 1.49e+05, 95% CI [-1.16e+06, 1.46e+06], t(479) =
+0.22, p = 0.823; Std. beta = 69.33, 95% CI [-538.13, 676.80])
+  - The effect of month × FFMC is statistically non-significant and negative (beta = -0.08, 95% CI [-2.21, 2.04], t(479) =
+-0.07, p = 0.940; Std. beta = 0.29, 95% CI [-0.68, 1.26])
+  - The effect of month × DMC is statistically non-significant and negative (beta = -0.03, 95% CI [-5.69, 5.63], t(479) =
+-9.74e-03, p = 0.992; Std. beta = 0.24, 95% CI [-0.15, 0.63])
+  - The effect of FFMC × DMC is statistically non-significant and negative (beta = -0.01, 95% CI [-0.39, 0.36], t(479) =
+-0.07, p = 0.945; Std. beta = 0.11, 95% CI [-0.21, 0.42])
+  - The effect of month × DC is statistically non-significant and negative (beta = -0.03, 95% CI [-0.59, 0.54], t(479) =
+-0.10, p = 0.924; Std. beta = 0.08, 95% CI [-0.25, 0.41])
+  - The effect of FFMC × DC is statistically non-significant and negative (beta = -9.95e-03, 95% CI [-0.06, 0.04], t(479) =
+-0.42, p = 0.675; Std. beta = -0.06, 95% CI [-0.69, 0.57])
+  - The effect of DMC × DC is statistically non-significant and positive (beta = 8.86e-03, 95% CI [-0.08, 0.09], t(479) =
+0.20, p = 0.839; Std. beta = -0.18, 95% CI [-0.46, 0.11])
+  - The effect of ISI × temp is statistically non-significant and negative (beta = -0.68, 95% CI [-2.48, 1.12], t(479) =
+-0.74, p = 0.459; Std. beta = 1.68, 95% CI [-13.15, 16.50])
+  - The effect of ISI × RH is statistically non-significant and negative (beta = -0.20, 95% CI [-0.92, 0.52], t(479) = -0.55,
+p = 0.584; Std. beta = 2.30, 95% CI [-18.20, 22.80])
+  - The effect of temp × RH is statistically non-significant and negative (beta = -0.03, 95% CI [-0.40, 0.33], t(479) = -0.19,
+p = 0.851; Std. beta = -0.04, 95% CI [-0.15, 0.07])
+  - The effect of ISI × wind is statistically non-significant and negative (beta = -3.03, 95% CI [-9.71, 3.66], t(479) =
+-0.89, p = 0.374; Std. beta = -0.03, 95% CI [-0.16, 0.10])
+  - The effect of temp × wind is statistically non-significant and positive (beta = 4.52e-03, 95% CI [-3.16, 3.17], t(479) =
+2.81e-03, p = 0.998; Std. beta = 0.07, 95% CI [-0.07, 0.20])
+  - The effect of RH × wind is statistically non-significant and negative (beta = -0.12, 95% CI [-1.13, 0.88], t(479) = -0.24,
+p = 0.811; Std. beta = -0.03, 95% CI [-0.16, 0.09])
+  - The effect of ISI × rain is statistically non-significant and negative (beta = -10472.63, 95% CI [-1.02e+05, 81532.81],
+t(479) = -0.22, p = 0.823; Std. beta = -60.04, 95% CI [-591.45, 471.38])
+  - The effect of temp × rain is statistically non-significant and negative (beta = -2722.84, 95% CI [-26223.92, 20778.25],
+t(479) = -0.23, p = 0.820; Std. beta = -27.10, 95% CI [-260.90, 206.71])
+  - The effect of RH × rain is statistically non-significant and negative (beta = -1308.02, 95% CI [-12830.24, 10214.20],
+t(479) = -0.22, p = 0.824; Std. beta = -36.78, 95% CI [-356.63, 283.07])
+  - The effect of wind × rain is statistically non-significant and positive (beta = 87.72, 95% CI [-386.30, 561.74], t(479) =
+0.36, p = 0.716; Std. beta = 0.73, 95% CI [-3.22, 4.68])
+  - The effect of (month × FFMC) × DMC is statistically non-significant and positive (beta = 1.99e-03, 95% CI [-0.06, 0.06],
+t(479) = 0.06, p = 0.950; Std. beta = 0.15, 95% CI [-0.50, 0.79])
+  - The effect of (month × FFMC) × DC is statistically non-significant and positive (beta = 5.08e-04, 95% CI [-5.92e-03,
+6.94e-03], t(479) = 0.16, p = 0.877; Std. beta = 0.12, 95% CI [-0.43, 0.67])
+  - The effect of (month × DMC) × DC is statistically non-significant and negative (beta = -1.66e-03, 95% CI [-0.01,
+9.40e-03], t(479) = -0.30, p = 0.768; Std. beta = -0.05, 95% CI [-0.26, 0.16])
+  - The effect of (FFMC × DMC) × DC is statistically non-significant and negative (beta = -9.85e-05, 95% CI [-1.05e-03,
+8.51e-04], t(479) = -0.20, p = 0.839; Std. beta = 0.04, 95% CI [-0.36, 0.44])
+  - The effect of (ISI × temp) × RH is statistically non-significant and positive (beta = 9.63e-03, 95% CI [-0.03, 0.05],
+t(479) = 0.47, p = 0.638; Std. beta = 1.62e-03, 95% CI [-0.10, 0.10])
+  - The effect of (ISI × temp) × wind is statistically non-significant and positive (beta = 0.14, 95% CI [-0.20, 0.49], t(479)
+= 0.81, p = 0.418; Std. beta = 0.03, 95% CI [-0.09, 0.15])
+  - The effect of (ISI × RH) × wind is statistically non-significant and positive (beta = 0.05, 95% CI [-0.08, 0.17], t(479) =
+0.71, p = 0.479; Std. beta = 4.59e-03, 95% CI [-0.15, 0.16])
+  - The effect of (temp × RH) × wind is statistically non-significant and positive (beta = 1.45e-03, 95% CI [-0.07, 0.07],
+t(479) = 0.04, p = 0.968; Std. beta = -0.05, 95% CI [-0.16, 0.05])
+  - The effect of (ISI × temp) × rain is statistically non-significant and positive (beta = 190.55, 95% CI [-1454.46,
+1835.56], t(479) = 0.23, p = 0.820; Std. beta = 23.46, 95% CI [-179.03, 225.94])
+  - The effect of (ISI × RH) × rain is statistically non-significant and positive (beta = 91.25, 95% CI [-718.65, 901.14],
+t(479) = 0.22, p = 0.825; Std. beta = 31.56, 95% CI [-248.59, 311.71])
+  - The effect of (temp × RH) × rain is statistically non-significant and positive (beta = 1.74e-05, 95% CI [-1.06e-04,
+1.40e-04], t(479) = 0.28, p = 0.781; Std. beta = 0.05, 95% CI [-0.33, 0.44])
+  - The effect of (ISI × wind) × rain is statistically non-significant and negative (beta = -2.34e-03, 95% CI [-0.01,
+5.35e-03], t(479) = -0.60, p = 0.550; Std. beta = -0.03, 95% CI [-0.12, 0.06])
+  - The effect of (RH × wind) × rain is statistically non-significant and positive (beta = 4.21, 95% CI [-178.11, 186.52],
+t(479) = 0.05, p = 0.964; Std. beta = 0.67, 95% CI [0.15, 1.20])
+  - The effect of (month × FFMC × DMC) × DC is statistically non-significant and positive (beta = 1.74, 95% CI [-7.09, 10.56],
+t(479) = 0.39, p = 0.699; Std. beta = -0.01, 95% CI [-0.38, 0.35])
+  - The effect of (ISI × temp × RH) × wind is statistically non-significant and positive (beta = 0.69, 95% CI [-32.89, 34.27],
+t(479) = 0.04, p = 0.968; Std. beta = 0.25, 95% CI [-0.05, 0.55])
+  - The effect of (ISI × temp × RH) × rain is statistically non-significant and positive (beta = 0.70, 95% CI [-3.40, 4.81],
+t(479) = 0.34, p = 0.736; Std. beta = -0.53, 95% CI [-0.95, -0.11])
+  - The effect of (ISI × temp × wind) × rain is statistically non-significant and positive (beta = 13.61, 95% CI [-24.71,
+51.93], t(479) = 0.70, p = 0.486; Std. beta = -4.47, 95% CI [-43.37, 34.44])
+  - The effect of (ISI × RH × wind) × rain is statistically non-significant and positive (beta = 3.06, 95% CI [-13.93, 20.05],
+t(479) = 0.35, p = 0.724; Std. beta = -1.90, 95% CI [-19.02, 15.22])
+  - The effect of (temp × RH × wind) × rain is statistically non-significant and positive (beta = 0.87, 95% CI [-5.03, 6.77],
+t(479) = 0.29, p = 0.772; Std. beta = -2.76, 95% CI [-26.18, 20.66])
+  - The effect of (ISI × temp × RH × wind) × rain is statistically non-significant and positive (beta = 7.89, 95% CI [-43.29,
+59.07], t(479) = 0.30, p = 0.762; Std. beta = 0.10, 95% CI [-0.21, 0.41])
+
+Standardized parameters were obtained by fitting the model on a standardized version of the dataset. 95% Confidence
+Intervals (CIs) and p-values were computed using a Wald t-distribution approximation.
+"
+"0","# Se encontra que ninguna de las variables evaluadas se encuentran asociadas al área total quemada por los incendios forestales en el parque natural Montesinho, Portugal. Ninguna de las variables evaluadas es estadisticamente significativa. Ademas, en el summary se puede evidenciar que ningun p value es menor a 0.05, lo que nos indica que las variables no son estadisticamente significativas."
+"0",""
